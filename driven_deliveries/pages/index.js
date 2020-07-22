@@ -80,8 +80,28 @@ export default class Home extends React.Component {
       height: '75px',
     };
 
+    const blackPiece = {
+      padding: 10,
+      margin: 20,
+      display: 'inline-block',
+      backgroundColor: 'grey',
+      borderRadius: '50%',
+      width: 75,
+      height: 75,
+    };
+
+    const redPiece = {
+      padding: 10,
+      margin: 20,
+      display: 'inline-block',
+      backgroundColor: 'red',
+      borderRadius: '50%',
+      width: 75,
+      height: 75,
+    };
+
     return (
-      <div className="main">
+      <div>
         <form onSubmit={this.handleSubmit}>
           <label>
             Size of Checkerboard
@@ -98,13 +118,21 @@ export default class Home extends React.Component {
           You have <b>{this.state.build ? 'currently' : 'not'}</b> modified the
           size of a checkerboard.
         </div>
-        <div>
+        <div style={{ textAlign: 'center' }}>
           <table>
-            {board.map((row) => {
+            {board.map((row, key1) => {
               return (
                 <tr>
-                  {row.map((sq, key) => {
-                    return <td style={sq === 0 ? black : white}></td>;
+                  {row.map((sq, key2) => {
+                    return (
+                      <td style={sq === 0 ? black : white}>
+                        {/* col {key2} row {key1} */}
+                        {key1 < 2 && <div style={redPiece}></div>}
+                        {key1 > 5 && <div style={blackPiece}></div>}
+                        <br></br>
+                        {<input type="radio"></input>}
+                      </td>
+                    );
                   })}
                 </tr>
               );
