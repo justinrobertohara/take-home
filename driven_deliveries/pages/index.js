@@ -1,6 +1,7 @@
 import P from '../components/paragraph';
 import Post from '../components/post';
 import React from 'react';
+import $ from 'jquery';
 
 export default class Home extends React.Component {
   constructor(props) {
@@ -10,10 +11,13 @@ export default class Home extends React.Component {
       sizeOfCheckerboard: null,
       build: false,
       board: [],
+      movePiece: false,
+      coordinates: null,
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.createBoard = this.createBoard.bind(this);
+    this.changeColor = this.changeColor.bind(this);
   }
 
   componentDidMount() {
@@ -60,6 +64,15 @@ export default class Home extends React.Component {
     }
     this.setState({
       board: board,
+    });
+  }
+
+  changeColor() {
+    console.log(event.target.id);
+    let coordinates = event.target.id;
+    this.setState({
+      movePiece: true,
+      coordinates: coordinates,
     });
   }
 
@@ -126,11 +139,23 @@ export default class Home extends React.Component {
                   {row.map((sq, key2) => {
                     return (
                       <td style={sq === 0 ? black : white}>
-                        {/* col {key2} row {key1} */}
-                        {key1 < 2 && <div style={redPiece}></div>}
-                        {key1 > 5 && <div style={blackPiece}></div>}
-                        <br></br>
-                        {<input type="radio"></input>}
+                        col {key2} row {key1}
+                        {key1 < 2 && (
+                          <div
+                            id={[key1, key2]}
+                            onClick={this.changeColor.bind(this)}
+                            style={redPiece}
+                          ></div>
+                        )}
+                        {key1 > 5 && (
+                          <div
+                            id={[key1, key2]}
+                            onClick={this.changeColor.bind(this)}
+                            style={blackPiece}
+                          ></div>
+                        )}
+                        {/* <br></br> */}
+                        {/* {<input type="radio"></input>} */}
                       </td>
                     );
                   })}
@@ -138,6 +163,13 @@ export default class Home extends React.Component {
               );
             })}
           </table>
+          <div>
+            {this.state.movePiece && (
+              <span>
+                <button>Up and Left</button> <button>Up and Right</button>
+              </span>
+            )}
+          </div>
         </div>
         <hr />
       </div>

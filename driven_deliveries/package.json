@@ -7,6 +7,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "jquery": "^3.5.1",
     "next": "latest",
     "react": "^16.7.0",
     "react-dom": "^16.7.0"
